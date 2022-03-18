@@ -27,14 +27,20 @@ const GlobalStyles: GlobalStyleComponent<
 
   }
 
+  #root {
+    height: 100%;
+  }
+
   ${({ theme, removeBg }) => css`
     html {
       font-size: 62.5%;
+      height: 100%;
     }
 
     body {
       font-family: ${theme.font.family};
       font-size: ${theme.font.sizes.medium};
+      height: 100%;
 
       ${!removeBg &&
       css`

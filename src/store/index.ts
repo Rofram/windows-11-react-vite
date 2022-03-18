@@ -138,6 +138,14 @@ class Windows11Store {
   setTabIndex(index: number) {
     this.TabIndex = index
   }
+
+  isStartMenuOpened = false
+
+  
+
+  setIsStartMenuOpened(isStartMenuOpened: boolean) {
+    this.isStartMenuOpened = isStartMenuOpened
+  }
 }
 
 export default new Windows11Store()

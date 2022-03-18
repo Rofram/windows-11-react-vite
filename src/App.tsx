@@ -4,14 +4,17 @@ import GlobalStyles from './themes/global'
 import theme from './themes/defaultTheme'
 import Taskbar from './components/Taskbar'
 import { StartMenu } from './components/StartMenu'
+import windows11Store from './store'
+import { Observer } from 'mobx-react-lite'
+import { MicrosoftEdge } from './components/MicrosoftEdge'
 
-const BackGround = styled.div`
+const Screen = styled.div`
   background-image: url('/assets/image-1.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   position: relative;
 `
@@ -19,13 +22,18 @@ const BackGround = styled.div`
 function App() {
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <BackGround>
-        <StartMenu />
-        <Taskbar />
-      </BackGround>
-    </ThemeProvider>
+    <Observer>
+      {() => (
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <Screen>
+            {windows11Store.isStartMenuOpened && <StartMenu />}
+            <MicrosoftEdge />
+            <Taskbar />
+          </Screen>
+        </ThemeProvider>
+      )}
+    </Observer>
   )
 }
 
