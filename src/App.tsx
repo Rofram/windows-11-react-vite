@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import GlobalStyles from './themes/global'
 import theme from './themes/defaultTheme'
 import Taskbar from './components/Taskbar'

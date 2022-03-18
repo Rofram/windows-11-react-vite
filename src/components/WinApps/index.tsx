@@ -1,7 +1,6 @@
 import * as Styled from './styles'
 import taskbarStore from '../../store'
 import { Observer } from 'mobx-react-lite'
-import { useState } from 'react'
 
 export default function WinApps() {
   return (

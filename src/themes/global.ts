@@ -29,6 +29,7 @@ const GlobalStyles: GlobalStyleComponent<
 
   #root {
     height: 100%;
+    overflow: hidden;
   }
 
   ${({ theme, removeBg }) => css`

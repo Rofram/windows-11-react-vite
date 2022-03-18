@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
 import * as Styled from './styles'
 
 class ClockStore {

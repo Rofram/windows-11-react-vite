@@ -8,10 +8,12 @@ export const Container = styled.div`
   background-color: red;
 
   position: absolute;
+  border-radius: 8.75px;
 `
 
 export const Header = styled.div`
-  height: 120px;
+  height: 80px;
+  background-color: blue;
 `
 
 export const Media = styled.iframe``
