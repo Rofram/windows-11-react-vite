@@ -9,7 +9,7 @@ import MicrosoftEdge from './components/MicrosoftEdge'
 import VsCode from './components/VsCode'
 
 const Screen = styled.div`
-  background-image: url('/assets/image-1.png');
+  background-image: url('assets/image-1.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
