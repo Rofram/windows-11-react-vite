@@ -32,7 +32,7 @@ function MicrosoftEdge() {
                 <BsArrowRight />
                 <BsArrowClockwise />
               </div>
-              <input type="text" ref={ref => store.setInputRef(ref)} />
+              <input type="text" onChange={e => store.search = e.target.value} ref={ref => store.setInputRef(ref)} />
               <div>
                 <BsDash size={20} color="#fff" />
                 <BiRectangle size={15} color="#fff" />

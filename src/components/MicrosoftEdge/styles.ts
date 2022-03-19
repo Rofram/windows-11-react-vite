@@ -19,6 +19,7 @@ export const Header = styled.div`
   background-color: #56585d;
   color: ${({ theme }) => theme.colors.white};
   padding: 0 1rem;
+  border-radius: 8.75px 8.75px 0 0;
 
   justify-content: space-between;
   align-items: center;
