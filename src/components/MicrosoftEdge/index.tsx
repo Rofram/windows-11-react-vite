@@ -1,55 +1,23 @@
 import { Observer } from 'mobx-react-lite'
 import * as Styled from './styles'
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
-import { useRef, useState } from 'react'
-import { makeAutoObservable } from 'mobx'
+import { BsArrowClockwise, BsArrowLeft, BsArrowRight } from 'react-icons/bs'
+import { memo, useEffect, useRef, useState } from 'react'
+import microsoftEdgeStore from './store'
+import { BsX, BsDash } from 'react-icons/bs'
+import { BiRectangle } from 'react-icons/bi'
+import windows11Store from '../../store'
 
-class MicrosoftEdgeStore {
-  dragging = false
-  mouseOffset = { x: 0, y: 0 }
 
-  constructor() {
-    makeAutoObservable(this)
-  }
-
-  container: HTMLDivElement | null = null
-
-  setContainerRef = (ref: HTMLDivElement | null) => {
-    this.container = ref
-  }
-
-  setDragging = (dragging: boolean) => {
-    this.dragging = dragging
-  }
-
-  onMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    this.setDragging(true)
-    this.mouseOffset.x = e.clientX
-    this.mouseOffset.y = e.clientY
-    console.log(e.clientX, e.clientY)
-  }
-
-  onMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    this.setDragging(false)
-  }
-
-  onMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (this.dragging) {
-      this.container!.style.left = `${e.clientX - this.mouseOffset.x}px`
-      this.container!.style.top = `${e.clientY - this.mouseOffset.y}px`
-    }
-  }
-
-  onMouseLeave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    this.setDragging(false)
-  }
-}
-
-export function MicrosoftEdge() {
+function MicrosoftEdge() {
   return (
     <Observer>
       {() => {
-        const [store] = useState(new MicrosoftEdgeStore())
+        const [store] = useState(microsoftEdgeStore)
+
+        useEffect(() => {
+          store.onMount()
+          return () => store.onUnmount()
+        }, [])
 
         return (
           <Styled.Container ref={ref => store.setContainerRef(ref)}>
@@ -60,13 +28,25 @@ export function MicrosoftEdge() {
               onMouseLeave={store.onMouseLeave.bind(store)}
             >
               <div>
-                <FiArrowLeft />
-                <FiArrowRight />
+                <BsArrowLeft />
+                <BsArrowRight />
+                <BsArrowClockwise />
+              </div>
+              <input type="text" ref={ref => store.setInputRef(ref)} />
+              <div>
+                <BsDash size={20} color="#fff" />
+                <BiRectangle size={15} color="#fff" />
+                <BsX size={20} color="#fff" onClick={() => windows11Store.setAppsOpened({ microsoftEdge: false })} />
               </div>
             </Styled.Header>
+            <Styled.Media>
+              <iframe src={`https://www.bing.com.br/search?q=${store.search}`}></iframe>
+            </Styled.Media>
           </Styled.Container>
         )
     }}
     </Observer>
   )
 }
+
+export default memo(MicrosoftEdge)

@@ -58,7 +58,7 @@ export const StartMenu = observer(() =>{
             </Styled.RecommendedHeader>
             <Styled.Recommended>
               {startMenuStore.recommendedApps.map((app) => (
-                <Styled.RecommendedApp>
+                <Styled.RecommendedApp key={app.title}>
                   <img src={app.icon} alt={app.title} />
                   <div>
                     <span>{app.title}</span>

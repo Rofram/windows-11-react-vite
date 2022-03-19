@@ -12,7 +12,8 @@ export default function WinApps() {
           <Styled.App src='assets/taskbar/DesktopManager.svg' />
           <Styled.App src='assets/taskbar/Chat.svg' />
           <Styled.App src='assets/taskbar/FileExplorer.svg' />
-          <Styled.App src='assets/taskbar/MicrosoftEdge.svg' />
+          <Styled.App src='assets/taskbar/MicrosoftEdge.svg' onClick={() => taskbarStore.setAppsOpened({microsoftEdge: !taskbarStore.appsOpened.microsoftEdge})} />
+          <Styled.App src='assets/taskbar/vscode.png' onClick={() => taskbarStore.setAppsOpened({vscode: !taskbarStore.appsOpened.vscode})} />
         </Styled.Container>
       )}
     </Observer>

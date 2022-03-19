@@ -5,6 +5,10 @@ type App = {
   alt: string
 }
 
+type AppsOpened = {
+  [key: string]: boolean 
+}
+
 class Windows11Store {
   constructor() {
     makeAutoObservable(this)
@@ -13,6 +17,19 @@ class Windows11Store {
   user = {
     img: 'https://avatars.githubusercontent.com/u/50988834?v=4',
     name: 'Rodrigo de França'
+  }
+
+  appsOpened: AppsOpened = {
+    vscode: false,
+    microsoftEdge: false,
+    fileExplorer: false,
+    windowsStore: false,
+    notepad: false,
+    spotify: false,
+  }
+
+  setAppsOpened(appsOpened: AppsOpened) {
+    this.appsOpened = { ...this.appsOpened, ...appsOpened }
   }
 
   apps: App[] = [

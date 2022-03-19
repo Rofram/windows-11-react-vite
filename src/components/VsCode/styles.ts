@@ -14,23 +14,14 @@ export const Container = styled.div`
 `
 
 export const Header = styled.div`
-  display: flex;
   height: 40px;
-  background-color: #56585d;
+  display: flex;
+  background-color: #252526;
   color: ${({ theme }) => theme.colors.white};
-  padding: 0 1rem;
-
-  justify-content: space-between;
+  border-radius: 8.75px 8.75px 0 0;
   align-items: center;
-
-  input {
-    background: #46474b;
-    color: ${({ theme }) => theme.colors.white};
-    outline: none;
-    border: none;
-    width: 50%;
-    padding: 10px;
-  }
+  justify-content: space-between;
+  padding: 0 1rem;
 
   > div {
     display: flex;
@@ -52,3 +43,13 @@ export const Media = styled.div`
   }
 `
 
+export const HeaderIcon = styled.img`
+  width: 20px;
+  height: 20px;
+`
+
+export const HeaderText = styled.span`
+  font-family: ${({ theme }) => theme.font.family.segoe};
+  font-size: 12px;
+  color: white;
+`

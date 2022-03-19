@@ -6,6 +6,7 @@ export const Container = styled.div`
     width: 100vw;
     height: 60px;
     background-color: rgba(68,68,68,0.3);
+    z-index: 100;
 
     justify-content: space-between;
     align-items: center;

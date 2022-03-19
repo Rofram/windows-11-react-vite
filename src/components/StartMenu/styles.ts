@@ -16,6 +16,7 @@ export const Container = styled.div`
   backdrop-filter: blur(40px);
   filter: brightness(0.8);
   border-radius: 8.75px;
+  z-index: 50;
 `
 
 export const Media = styled.div`

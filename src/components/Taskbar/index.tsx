@@ -1,4 +1,4 @@
-import Clock from '../Clock';
+import { Clock } from '../Clock';
 import { SystemTray } from '../SystemTray';
 import WidgetsButton from '../WidgetsButton';
 import WinApps from '../WinApps';

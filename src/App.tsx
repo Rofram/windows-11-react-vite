@@ -5,7 +5,8 @@ import Taskbar from './components/Taskbar'
 import { StartMenu } from './components/StartMenu'
 import windows11Store from './store'
 import { Observer } from 'mobx-react-lite'
-import { MicrosoftEdge } from './components/MicrosoftEdge'
+import MicrosoftEdge from './components/MicrosoftEdge'
+import VsCode from './components/VsCode'
 
 const Screen = styled.div`
   background-image: url('/assets/image-1.png');
@@ -27,7 +28,8 @@ function App() {
           <GlobalStyles />
           <Screen>
             {windows11Store.isStartMenuOpened && <StartMenu />}
-            <MicrosoftEdge />
+            {windows11Store.appsOpened.microsoftEdge && <MicrosoftEdge />}
+            {windows11Store.appsOpened.vscode && <VsCode />}
             <Taskbar />
           </Screen>
         </ThemeProvider>
