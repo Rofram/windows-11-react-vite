@@ -406,7 +406,7 @@ var E=Object.defineProperty;var $=Object.getOwnPropertySymbols;var F=Object.prot
   font-size: 12px;
   color: white;
 `;function Fe(){const[e]=f.exports.useState(Oe);return t(h,{children:()=>n(Ae,{ref:s=>e.setContainerRef(s),children:[n(Se,{onMouseDown:e.onMouseDown.bind(e),onMouseUp:e.onMouseUp.bind(e),onMouseMove:e.onMouseMove.bind(e),onMouseLeave:e.onMouseLeave.bind(e),children:[n("div",{children:[t(ze,{src:"assets/taskbar/vscode.png"}),t(Ee,{children:"VS Code"})]}),n("div",{children:[t(S,{size:20,color:"#fff"}),t(C,{size:15,color:"#fff"}),t(z,{size:20,color:"#fff",onClick:()=>l.setAppsOpened({vscode:!1})})]})]}),t(Ce,{children:t("iframe",{src:"http://www.vscode.dev"})})]})})}var Pe=f.exports.memo(Fe);const De=o.div`
-  background-image: url('/assets/image-1.png');
+  background-image: url('assets/image-1.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
