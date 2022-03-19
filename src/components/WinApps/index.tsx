@@ -7,13 +7,27 @@ export default function WinApps() {
     <Observer>
       {() => (
         <Styled.Container>
-          <Styled.App src='assets/taskbar/Windows.svg' onClick={() => taskbarStore.setIsStartMenuOpened(!taskbarStore.isStartMenuOpened)} />
-          <Styled.App src='assets/taskbar/Search.svg' />
-          <Styled.App src='assets/taskbar/DesktopManager.svg' />
-          <Styled.App src='assets/taskbar/Chat.svg' />
-          <Styled.App src='assets/taskbar/FileExplorer.svg' />
-          <Styled.App src='assets/taskbar/MicrosoftEdge.svg' onClick={() => taskbarStore.setAppsOpened({microsoftEdge: !taskbarStore.appsOpened.microsoftEdge})} />
-          <Styled.App src='assets/taskbar/vscode.png' onClick={() => taskbarStore.setAppsOpened({vscode: !taskbarStore.appsOpened.vscode})} />
+          <button onClick={() => taskbarStore.setIsStartMenuOpened(!taskbarStore.isStartMenuOpened)}>
+            <Styled.App src='assets/taskbar/Windows.svg' />
+          </button>
+          <button>
+            <Styled.App src='assets/taskbar/Search.svg' />
+          </button>
+          <button>
+            <Styled.App src='assets/taskbar/DesktopManager.svg' />
+          </button>
+          <button>
+            <Styled.App src='assets/taskbar/Chat.svg' />
+          </button>
+          <button>
+            <Styled.App src='assets/taskbar/FileExplorer.svg' />
+          </button>
+          <button onClick={() => taskbarStore.setAppsOpened({microsoftEdge: !taskbarStore.appsOpened.microsoftEdge})}>
+            <Styled.App src='assets/taskbar/MicrosoftEdge.svg' />
+          </button>
+          <button onClick={() => taskbarStore.setAppsOpened({vscode: !taskbarStore.appsOpened.vscode})}>
+            <Styled.App src='assets/taskbar/vscode.png' />
+          </button>
         </Styled.Container>
       )}
     </Observer>

@@ -141,6 +141,11 @@ class Windows11Store {
   ]
 
   isAllAppsOpened = false
+  isSystemTrayPopupOpened = false
+
+  toggleSystemTrayPopup() {
+    this.isSystemTrayPopupOpened = !this.isSystemTrayPopupOpened
+  }
 
   toggleAllApps() {
     this.isAllAppsOpened = !this.isAllAppsOpened

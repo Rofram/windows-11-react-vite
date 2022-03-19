@@ -4,7 +4,7 @@ import WidgetsButton from '../WidgetsButton';
 import WinApps from '../WinApps';
 import * as Styled from './styles';
 
-export default function Taskbar() {
+export function Taskbar() {
   return (
     <Styled.Container>
       <WidgetsButton />
