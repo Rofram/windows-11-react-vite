@@ -20,7 +20,10 @@ function MicrosoftEdge() {
         }, [])
 
         return (
-          <Styled.Container ref={ref => store.setContainerRef(ref)}>
+          <Styled.Container 
+            ref={ref => store.setContainerRef(ref)}
+            requestToClose={windows11Store.appsOpened.microsoftEdge.requestToClose}
+          >
             <Styled.Header 
               onMouseDown={store.onMouseDown.bind(store)}
               onMouseUp={store.onMouseUp.bind(store)} 
@@ -36,7 +39,7 @@ function MicrosoftEdge() {
               <div>
                 <BsDash size={20} color="#fff" />
                 <BiRectangle size={15} color="#fff" />
-                <BsX size={20} color="#fff" onClick={() => windows11Store.setAppsOpened({ microsoftEdge: false })} />
+                <BsX size={20} color="#fff" onClick={() => windows11Store.toggleAppOpened('microsoftEdge')} />
               </div>
             </Styled.Header>
             <Styled.Media>

@@ -12,7 +12,10 @@ function VsCode() {
   return (
     <Observer>
       {() => (
-        <Styled.Container ref={ref => store.setContainerRef(ref)}>
+        <Styled.Container 
+          ref={ref => store.setContainerRef(ref)}
+          requestToClose={windows11Store.appsOpened.vscode.requestToClose}
+        >
           <Styled.Header 
             onMouseDown={store.onMouseDown.bind(store)}
             onMouseUp={store.onMouseUp.bind(store)} 
@@ -26,7 +29,7 @@ function VsCode() {
             <div>
               <BsDash size={20} color="#fff" />
               <BiRectangle size={15} color="#fff" />
-              <BsX size={20} color="#fff" onClick={() => windows11Store.setAppsOpened({ vscode: false })} />
+              <BsX size={20} color="#fff" onClick={() => windows11Store.toggleAppOpened('vscode')} />
             </div>
           </Styled.Header>
           <Styled.Media>

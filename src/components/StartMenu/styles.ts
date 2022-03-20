@@ -1,15 +1,41 @@
-import styled, { css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 
+const popupAnimation = keyframes`
+  0% {
+    transform: translateX(-50%);
+    bottom: -1000px;
+  }
+  100% {
+    transform: translateX(-50%);
+    bottom: 70px;
+  }
+`
 
-export const Container = styled.div`
+const closeAnimation = keyframes`
+  0% {
+    transform: translateX(-50%);
+    bottom: 70px;
+  }
+  100% {
+    transform: translateX(-50%);
+    bottom: -1000px;
+  }
+`
+
+type IContainer = {
+  requestToClose: boolean
+}
+
+export const Container = styled.div<IContainer>`
   display: flex;
   flex-direction: column;
   width: 800px;
   height: 925px;
   position: absolute;
-  top: 50%;
+  bottom: 70px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+  animation: ${({ requestToClose }) => requestToClose ?  closeAnimation : popupAnimation} 0.5s ease-in-out;
   
 
   background-color: rgba(68,68,68,0.4);

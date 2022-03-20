@@ -8,9 +8,10 @@ import { Observer } from 'mobx-react-lite'
 import MicrosoftEdge from './components/MicrosoftEdge'
 import VsCode from './components/VsCode'
 import { SystemTrayPopup } from './components/SystemTrayPopup'
+import { Calendar } from './components/Calendar'
 
 const Screen = styled.div`
-  background-image: url('assets/image-1.png');
+  background-image: url('assets/background.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -28,10 +29,11 @@ function App() {
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           <Screen>
-            {windows11Store.isStartMenuOpened && <StartMenu />}
-            {windows11Store.appsOpened.microsoftEdge && <MicrosoftEdge />}
-            {windows11Store.appsOpened.vscode && <VsCode />}
-            {windows11Store.isSystemTrayPopupOpened && <SystemTrayPopup />}
+            {windows11Store.startMenu.isOpen && <StartMenu />}
+            {windows11Store.appsOpened.microsoftEdge.isOpen && <MicrosoftEdge />}
+            {windows11Store.appsOpened.vscode.isOpen && <VsCode />}
+            {windows11Store.systemTrayPopup.isOpen && <SystemTrayPopup />}
+            {/* <Calendar /> */}
             <Taskbar />
           </Screen>
         </ThemeProvider>

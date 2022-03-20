@@ -1,14 +1,37 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-export const Container = styled.div`
+const openAnimation = keyframes`
+  0% {
+    bottom: -200px;
+  }
+  100% {
+    bottom: 70px;
+  }
+`;
+
+const closeAnimation = keyframes`
+  0% {
+    bottom: 70px;
+  }
+  100% {
+    bottom: -200px;
+  }
+`;
+
+type IContainer = {
+  requestToClose: boolean;
+}
+
+export const Container = styled.div<IContainer>`
   width: 467.5px;
   position: absolute;
   background-color: rgba(68,68,68,0.4);
   backdrop-filter: blur(40px);
   filter: brightness(0.8);
-  bottom: 8%;
+  bottom: 70px;
   right: 1%;
   border-radius: 8.75px;
+  animation: ${({ requestToClose }) => requestToClose ? closeAnimation : openAnimation} 0.3s ease-in;
 `;
 
 export const ButtonContainer = styled.div`

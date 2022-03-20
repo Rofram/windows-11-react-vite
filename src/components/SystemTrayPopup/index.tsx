@@ -1,13 +1,13 @@
 import * as Styled from './styles'
 import systemTray from './store'
 import { Observer } from 'mobx-react-lite'
-
+import windows11Store from '../../store'
 
 export function SystemTrayPopup() {
   return (
     <Observer>
       {() => (
-        <Styled.Container>
+        <Styled.Container requestToClose={windows11Store.systemTrayPopup.requestToClose} >
           <Styled.Content>
             <Styled.ButtonContainer>
               {systemTray.buttons.map((button, index) => (

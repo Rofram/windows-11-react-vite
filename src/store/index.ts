@@ -1,12 +1,8 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 type App = {
   icon: string
   alt: string
-}
-
-type AppsOpened = {
-  [key: string]: boolean 
 }
 
 class Windows11Store {
@@ -19,17 +15,47 @@ class Windows11Store {
     name: 'Rodrigo de França'
   }
 
-  appsOpened: AppsOpened = {
-    vscode: false,
-    microsoftEdge: false,
-    fileExplorer: false,
-    windowsStore: false,
-    notepad: false,
-    spotify: false,
+  appsOpened = {
+    vscode: {
+      requestToClose: false,
+      isOpen: false
+    },
+    microsoftEdge: {
+      requestToClose: false,
+      isOpen: false
+    },
+    fileExplorer: {
+      requestToClose: false,
+      isOpen: false
+    },
+    windowsStore: {
+      requestToClose: false,
+      isOpen: false
+    },
+    notepad: {
+      requestToClose: false,
+      isOpen: false
+    },
+    spotify: {
+      requestToClose: false,
+      isOpen: false
+    },
   }
 
-  setAppsOpened(appsOpened: AppsOpened) {
-    this.appsOpened = { ...this.appsOpened, ...appsOpened }
+  toggleAppOpened(app: keyof typeof this.appsOpened) {
+    if (this.appsOpened[app].isOpen) {
+      this.appsOpened[app].requestToClose = true
+      setTimeout(() => {
+        runInAction(() => {
+          this.appsOpened[app].isOpen = false
+          this.appsOpened[app].requestToClose = false
+        })
+      }, 300)
+
+      return;
+    }
+
+    this.appsOpened[app].isOpen = true
   }
 
   apps: App[] = [
@@ -141,11 +167,6 @@ class Windows11Store {
   ]
 
   isAllAppsOpened = false
-  isSystemTrayPopupOpened = false
-
-  toggleSystemTrayPopup() {
-    this.isSystemTrayPopupOpened = !this.isSystemTrayPopupOpened
-  }
 
   toggleAllApps() {
     this.isAllAppsOpened = !this.isAllAppsOpened
@@ -155,18 +176,52 @@ class Windows11Store {
     this.apps.push(newApp)
   }
 
-  TabIndex = 0  
+  tabIndex = 0  
 
   setTabIndex(index: number) {
-    this.TabIndex = index
+    this.tabIndex = index
   }
 
-  isStartMenuOpened = false
+  systemTrayPopup = {
+    isOpen: false,
+    requestToClose: false
+  }
 
-  
+  startMenu = {
+    isOpen: false,
+    requestToClose: false
+  }
 
-  setIsStartMenuOpened(isStartMenuOpened: boolean) {
-    this.isStartMenuOpened = isStartMenuOpened
+  toggleSystemTrayPopup() {
+    if (this.systemTrayPopup.isOpen) {
+      this.systemTrayPopup.requestToClose = true
+      setTimeout(() => {
+        runInAction(() => {
+          this.systemTrayPopup.isOpen = false
+          this.systemTrayPopup.requestToClose = false
+        })
+      }, 300)
+
+      return;
+    }
+
+    this.systemTrayPopup.isOpen = true
+  }
+
+  toggleStartMenuOpened() {
+    if (this.startMenu.isOpen) {
+      this.startMenu.requestToClose = true
+      setTimeout(() => {
+        runInAction(() => {
+          this.startMenu.isOpen = false
+          this.startMenu.requestToClose = false
+        })
+      }, 300)
+
+      return;
+    }
+    
+    this.startMenu.isOpen = true
   }
 }
 

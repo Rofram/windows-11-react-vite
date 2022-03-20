@@ -1,7 +1,37 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-export const Container = styled.div`
-  ${({ theme }) => css`
+type IContainer = {
+  requestToClose: boolean;
+}
+
+const windowOpenAnimation = keyframes`
+  0% {
+    width: 550px;
+    height: 309.375px;
+    opacity: 0;
+  }
+  100% {
+    width: 1100px;
+    height: 618.75px;
+    opacity: 1;
+  }
+`
+
+const windowCloseAnimation = keyframes`
+  0% {
+    width: 1100px;
+    height: 618.75px;
+    opacity: 1;
+  }
+  100% {
+    width: 550px;
+    height: 309.375px;
+    opacity: 0;
+  }
+`
+
+export const Container = styled.div<IContainer>`
+  ${({ theme, requestToClose }) => css`
     resize: both;
     width: 1100px;
     height: 618.75px;
@@ -10,6 +40,11 @@ export const Container = styled.div`
 
     position: absolute;
     border-radius: 8.75px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    animation: ${requestToClose ? windowCloseAnimation : windowOpenAnimation} 0.3s ease;
   `}
 `
 

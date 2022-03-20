@@ -22,4 +22,5 @@ export const Container = styled.div`
 export const App = styled.img`
   width: 30px;
   height: 30px;
+  outline: none;
 `
