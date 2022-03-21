@@ -1,4 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
+import { TesteApp } from '../apps/vendor/TesteApp'
+import { WindowsApp } from '../core/WindowsApp'
 
 type App = {
   icon: string
@@ -9,6 +11,10 @@ class Windows11Store {
   constructor() {
     makeAutoObservable(this)
   }
+
+
+  openedApps: WindowsApp[] = []
+
 
   user = {
     img: 'https://avatars.githubusercontent.com/u/50988834?v=4',
@@ -43,19 +49,7 @@ class Windows11Store {
   }
 
   toggleAppOpened(app: keyof typeof this.appsOpened) {
-    if (this.appsOpened[app].isOpen) {
-      this.appsOpened[app].requestToClose = true
-      setTimeout(() => {
-        runInAction(() => {
-          this.appsOpened[app].isOpen = false
-          this.appsOpened[app].requestToClose = false
-        })
-      }, 300)
-
-      return;
-    }
-
-    this.appsOpened[app].isOpen = true
+    this.openedApps.push(new TesteApp())
   }
 
   apps: App[] = [
