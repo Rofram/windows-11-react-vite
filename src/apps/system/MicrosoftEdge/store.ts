@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, untracked } from 'mobx'
 
 class MicrosoftEdgeStore {
   dragging = false
@@ -9,7 +9,9 @@ class MicrosoftEdgeStore {
   container: HTMLDivElement | null = null
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this, {}, {
+      autoBind: true,
+    })
   }
 
   setContainerRef(ref: HTMLDivElement | null) {

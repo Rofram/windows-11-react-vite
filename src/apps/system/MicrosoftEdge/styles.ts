@@ -35,6 +35,7 @@ export const Container = styled.div<IContainer>`
     resize: both;
     width: 1100px;
     height: 618.75px;
+    box-shadow: 11px;
     
     background-color: ${theme.colors.white};
 

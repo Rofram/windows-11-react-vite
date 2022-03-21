@@ -5,10 +5,13 @@ import { useEffect } from 'react'
 import microsoftEdgeStore from './store'
 import { BsX, BsDash } from 'react-icons/bs'
 import { BiRectangle } from 'react-icons/bi'
-import windows11Store from '../../../store'
+import windows11Store from '../store'
 
+type WindowProps = {
+  children: React.ReactNode
+}
 
-function MicrosoftEdge() {
+function Window({ children }: WindowProps) {
   useEffect(() => {
     microsoftEdgeStore.onMount()
     return () => microsoftEdgeStore.onUnmount()
@@ -38,7 +41,7 @@ function MicrosoftEdge() {
         </div>
       </Styled.Header>
       <Styled.Media>
-        <iframe src={`https://www.bing.com.br/search?q=${microsoftEdgeStore.search}`}></iframe>
+        {children}
       </Styled.Media>
     </Styled.Container>
   )
