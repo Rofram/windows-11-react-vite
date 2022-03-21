@@ -5,7 +5,7 @@ import { memo, useEffect, useRef, useState } from 'react'
 import microsoftEdgeStore from './store'
 import { BsX, BsDash } from 'react-icons/bs'
 import { BiRectangle } from 'react-icons/bi'
-import windows11Store from '../../store'
+import windows11Store from '../../../store'
 
 
 function MicrosoftEdge() {

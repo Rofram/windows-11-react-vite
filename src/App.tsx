@@ -5,10 +5,12 @@ import { Taskbar } from './components/Taskbar'
 import { StartMenu } from './components/StartMenu'
 import windows11Store from './store'
 import { Observer } from 'mobx-react-lite'
-import MicrosoftEdge from './components/MicrosoftEdge'
+import {WindowsApp} from './core/WindowsApp'
 import VsCode from './components/VsCode'
 import { SystemTrayPopup } from './components/SystemTrayPopup'
-import { Calendar } from './components/Calendar'
+import { Calendar } from './apps/system/Calendar'
+import React, { useState } from 'react'
+import { TesteApp } from './apps/vendor/TesteApp'
 
 const Screen = styled.div`
   background-image: url('assets/background.png');
@@ -23,15 +25,17 @@ const Screen = styled.div`
 
 function App() {
 
+  const [app] = useState<WindowsApp>(new TesteApp())
+
   return (
     <Observer>
       {() => (
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           <Screen>
+            {windows11Store.openedApps.map((app, index) => <React.Fragment key={String(index)}>{app.render()}</React.Fragment>)}
+
             {windows11Store.startMenu.isOpen && <StartMenu />}
-            {windows11Store.appsOpened.microsoftEdge.isOpen && <MicrosoftEdge />}
-            {windows11Store.appsOpened.vscode.isOpen && <VsCode />}
             {windows11Store.systemTrayPopup.isOpen && <SystemTrayPopup />}
             {/* <Calendar /> */}
             <Taskbar />
