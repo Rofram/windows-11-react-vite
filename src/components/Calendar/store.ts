@@ -21,6 +21,8 @@ class CalendarStore {
     'Sab',
     'Dom'
   ]
+
+  calendarHeaderText = new Intl.DateTimeFormat('pt-br', { month: 'long', weekday: 'long', day: '2-digit' }).format(this.now)
   
   days = Array.from({ length: this.lastDayOfMonth() }, (_, k) => k + 1)
 

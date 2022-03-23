@@ -1,13 +1,16 @@
 import { Observer } from 'mobx-react-lite'
 import * as Styled from './styles'
 import calendarStore from './store'
+import { memo } from 'react'
 
-export function Calendar() {
+function Calendar() {
   return (
     <Observer>
       {() => (
         <Styled.Container>
-          <Styled.Header></Styled.Header>
+          <Styled.Header>
+            <span>{calendarStore.calendarHeaderText}</span>
+          </Styled.Header>
           <Styled.CalendarTitle>
             <div>
               <span>{calendarStore.month}</span>
@@ -21,7 +24,7 @@ export function Calendar() {
               </Styled.DayOfWeek>
             ))}
             {calendarStore.days.map((day) => (
-              <Styled.Day key={day}>
+              <Styled.Day key={day} isToday={day == calendarStore.now.getDay()}>
                 <span>{day}</span>
               </Styled.Day>
             ))}
@@ -31,3 +34,5 @@ export function Calendar() {
     </Observer>
   )
 }
+
+export default memo(Calendar)

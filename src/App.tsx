@@ -3,14 +3,11 @@ import GlobalStyles from './themes/global'
 import theme from './themes/defaultTheme'
 import { Taskbar } from './components/Taskbar'
 import { StartMenu } from './components/StartMenu'
-import windows11Store from './store'
-import { Observer } from 'mobx-react-lite'
-import {WindowsApp} from './core/WindowsApp'
-import VsCode from './components/VsCode'
+import { observer } from 'mobx-react-lite'
 import { SystemTrayPopup } from './components/SystemTrayPopup'
-import { Calendar } from './apps/system/Calendar'
+import Calendar from './components/Calendar'
 import React, { useState } from 'react'
-import { TesteApp } from './apps/vendor/TesteApp'
+import taskManager from './core/taskManager'
 
 const Screen = styled.div`
   background-image: url('assets/background.png');
@@ -25,25 +22,21 @@ const Screen = styled.div`
 
 function App() {
 
-  const [app] = useState<WindowsApp>(new TesteApp())
+  const [tasks] = useState(taskManager)
 
   return (
-    <Observer>
-      {() => (
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <Screen>
-            {windows11Store.openedApps.map((app, index) => <React.Fragment key={String(index)}>{app.render()}</React.Fragment>)}
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Screen>
+        {Array.from(tasks.apps.values()).map((app) => <React.Fragment key={app.store.uuid}>{app.render()}</React.Fragment>)}
 
-            {windows11Store.startMenu.isOpen && <StartMenu />}
-            {windows11Store.systemTrayPopup.isOpen && <SystemTrayPopup />}
-            {/* <Calendar /> */}
-            <Taskbar />
-          </Screen>
-        </ThemeProvider>
-      )}
-    </Observer>
+        {tasks.startMenu.isOpen && <StartMenu />}
+        {tasks.systemTrayPopup.isOpen && <SystemTrayPopup />}
+        <Calendar />
+        <Taskbar />
+      </Screen>
+    </ThemeProvider>
   )
 }
 
-export default App
+export default observer(App)

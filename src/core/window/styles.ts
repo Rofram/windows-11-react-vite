@@ -1,7 +1,10 @@
 import styled, { css, keyframes } from "styled-components";
 
 type IContainer = {
-  requestToClose: boolean;
+  requestToClose?: boolean;
+  isFocused?: boolean;
+  isMaximized?: boolean;
+  isMinimized?: boolean;
 }
 
 const windowOpenAnimation = keyframes`
@@ -31,18 +34,20 @@ const windowCloseAnimation = keyframes`
 `
 
 export const Container = styled.div<IContainer>`
-  ${({ theme, requestToClose }) => css`
+  ${({ requestToClose, isFocused, isMinimized, isMaximized }) => css`
     resize: both;
     width: 1100px;
     height: 618.75px;
     
-    background-color: ${theme.colors.white};
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(14px);
 
     position: absolute;
     border-radius: 8.75px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: ${isFocused ? "15" : "5"};
 
     animation: ${requestToClose ? windowCloseAnimation : windowOpenAnimation} 0.3s ease;
   `}
@@ -51,22 +56,13 @@ export const Container = styled.div<IContainer>`
 export const Header = styled.div`
   display: flex;
   height: 40px;
-  background-color: #56585d;
+  background: transparent;
   color: ${({ theme }) => theme.colors.white};
   padding: 0 1rem;
   border-radius: 8.75px 8.75px 0 0;
 
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-
-  input {
-    background: #46474b;
-    color: ${({ theme }) => theme.colors.white};
-    outline: none;
-    border: none;
-    width: 50%;
-    padding: 10px;
-  }
 
   > div {
     display: flex;
@@ -75,7 +71,7 @@ export const Header = styled.div`
   }
 `
 
-export const Media = styled.div`
+export const Content = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 0 0 8.75px 8.75px;

@@ -1,55 +1,30 @@
-import { makeAutoObservable, runInAction } from 'mobx'
-import { TesteApp } from '../apps/vendor/TesteApp'
-import { WindowsApp } from '../core/WindowsApp'
+import { makeAutoObservable } from 'mobx'
 
 type App = {
   icon: string
   alt: string
 }
 
-class Windows11Store {
+class startMenuStore {
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this, {}, { autoBind: true });
   }
 
+  tabIndex = 0  
 
-  openedApps: WindowsApp[] = []
+  setTabIndex(index: number) {
+    this.tabIndex = index
+  }
 
+  isAllAppsOpened = false
+
+  toggleAllApps() {
+    this.isAllAppsOpened = !this.isAllAppsOpened
+  }  
 
   user = {
     img: 'https://avatars.githubusercontent.com/u/50988834?v=4',
     name: 'Rodrigo de França'
-  }
-
-  appsOpened = {
-    vscode: {
-      requestToClose: false,
-      isOpen: false
-    },
-    microsoftEdge: {
-      requestToClose: false,
-      isOpen: false
-    },
-    fileExplorer: {
-      requestToClose: false,
-      isOpen: false
-    },
-    windowsStore: {
-      requestToClose: false,
-      isOpen: false
-    },
-    notepad: {
-      requestToClose: false,
-      isOpen: false
-    },
-    spotify: {
-      requestToClose: false,
-      isOpen: false
-    },
-  }
-
-  toggleAppOpened(app: keyof typeof this.appsOpened) {
-    this.openedApps.push(new TesteApp())
   }
 
   apps: App[] = [
@@ -159,64 +134,6 @@ class Windows11Store {
       description: 'Yesterday at 1:15 PM'
     }
   ]
-
-  isAllAppsOpened = false
-
-  toggleAllApps() {
-    this.isAllAppsOpened = !this.isAllAppsOpened
-  }
-
-  setNewApp(newApp: App) {
-    this.apps.push(newApp)
-  }
-
-  tabIndex = 0  
-
-  setTabIndex(index: number) {
-    this.tabIndex = index
-  }
-
-  systemTrayPopup = {
-    isOpen: false,
-    requestToClose: false
-  }
-
-  startMenu = {
-    isOpen: false,
-    requestToClose: false
-  }
-
-  toggleSystemTrayPopup() {
-    if (this.systemTrayPopup.isOpen) {
-      this.systemTrayPopup.requestToClose = true
-      setTimeout(() => {
-        runInAction(() => {
-          this.systemTrayPopup.isOpen = false
-          this.systemTrayPopup.requestToClose = false
-        })
-      }, 300)
-
-      return;
-    }
-
-    this.systemTrayPopup.isOpen = true
-  }
-
-  toggleStartMenuOpened() {
-    if (this.startMenu.isOpen) {
-      this.startMenu.requestToClose = true
-      setTimeout(() => {
-        runInAction(() => {
-          this.startMenu.isOpen = false
-          this.startMenu.requestToClose = false
-        })
-      }, 300)
-
-      return;
-    }
-    
-    this.startMenu.isOpen = true
-  }
 }
 
-export default new Windows11Store()
+export default new startMenuStore()

@@ -1,27 +1,44 @@
 import styled, { css } from "styled-components";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 8.75px;
-  position: absolute;
-  bottom: 70px;
-  right: 15px;
-  width: 470px;
-  height: 515px;
-  background-color: rgba(68, 68, 68, 0.4);
-  backdrop-filter: blur(40px);
-  filter: brightness(0.8);
+type IContainer = {
+  requestToClose?: boolean;
+}
+
+export const Container = styled.div<IContainer>`
+  ${({ theme, requestToClose }) => css`
+    display: flex;
+    flex-direction: column;
+    border-radius: 8.75px;
+    position: absolute;
+    bottom: 70px;
+    right: 15px;
+    width: 470px;
+    height: 515px;
+    background-color: rgba(68, 68, 68, 0.4);
+    backdrop-filter: blur(40px);
+  `}
 `
 
 export const Header = styled.div`
   display: flex;
   height: 70px;
   background-color: rgba(68, 68, 68, 0.3);
-  filter: brightness(0.8);
   color: ${({ theme }) => theme.colors.white};
-  padding: 1rem;
+  padding: 0 2rem;
   border-radius: 8.75px 8.75px 0 0;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    font-size: 1.5rem;
+    font-family: ${({ theme }) => theme.font.family.openSans};
+    color: #fff;
+    
+    &:hover {
+      filter: brightness(0.8);
+      cursor: default;
+    }
+  }
 `
 
 export const CalendarTitle = styled.div`
@@ -36,7 +53,7 @@ export const CalendarTitle = styled.div`
     }
 
     span {
-      font-size: 1.9rem;
+      font-size: 1.6rem;
       font-weight: 600;
       font-family: ${theme.font.family.openSans};
       color: ${theme.colors.white};
@@ -53,18 +70,23 @@ export const CalendarGrid = styled.div`
   place-content: center;
 `
 
-export const Day = styled.div`
-  ${({ theme }) => css`
+type DayProps = {
+  isToday?: boolean;
+}
+
+export const Day = styled.div<DayProps>`
+  ${({ theme, isToday }) => css`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 55px;
     height: 55px;
     border-radius: 50%;
+    background-color: ${isToday ? theme.colors.primary : 'transparent'};
     
     span {
-      color: ${theme.colors.white};
-      font-size: 1.9rem;
+      color: ${isToday ? '#000' : theme.colors.white};
+      font-size: 1.6rem;
       font-weight: 400;
       font-family: ${theme.font.family.openSans};
     }
@@ -81,7 +103,7 @@ export const DayOfWeek = styled.div`
     
     span {
       color: ${theme.colors.white};
-      font-size: 1.9rem;
+      font-size: 1.6rem;
       font-weight: 600;
       font-family: ${theme.font.family.openSans};
     }

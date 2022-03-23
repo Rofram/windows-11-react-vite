@@ -1,12 +1,13 @@
 import * as Styled from './styles'
-import startMenuStore from '../../store'
+import taskManager from '../../core/taskManager'
+import startMenuStore from './store'
 import { Observer } from 'mobx-react-lite'
 
 export function StartMenu() {
   return (
     <Observer>
       {() => (
-        <Styled.Container requestToClose={startMenuStore.startMenu.requestToClose}>
+        <Styled.Container requestToClose={taskManager.startMenu.requestToClose}>
           <Styled.Media>
             <Styled.SearchBar>
               <input type="text" placeholder='Type here to search' />

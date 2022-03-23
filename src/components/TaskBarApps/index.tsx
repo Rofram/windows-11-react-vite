@@ -1,13 +1,15 @@
 import * as Styled from './styles'
-import taskbarStore from '../../store'
 import { Observer } from 'mobx-react-lite'
+import taskManager from '../../core/taskManager'
+import { MicrosoftEdge } from '../../apps/system/MicrosoftEdge'
+import { VsCode } from '../../apps/vendor/VsCode'
 
-export default function WinApps() {
+export default function TaskBarApps() {
   return (
     <Observer>
       {() => (
         <Styled.Container>
-          <button onClick={() => taskbarStore.toggleStartMenuOpened()}>
+          <button onClick={() => taskManager.toggleStartMenuOpened()}>
             <Styled.App src='assets/taskbar/Windows.svg' />
           </button>
           <button onClick={() => {}}>
@@ -22,10 +24,10 @@ export default function WinApps() {
           <button onClick={() => {}}>
             <Styled.App src='assets/taskbar/FileExplorer.svg' />
           </button>
-          <button onClick={() => taskbarStore.toggleAppOpened('microsoftEdge')}>
+          <button onClick={() => taskManager.addApp(new MicrosoftEdge())}>
             <Styled.App src='assets/taskbar/MicrosoftEdge.svg' />
           </button>
-          <button onClick={() => taskbarStore.toggleAppOpened('vscode')}>
+          <button onClick={() => taskManager.addApp(new VsCode())}>
             <Styled.App src='assets/taskbar/vscode.png' />
           </button>
         </Styled.Container>
