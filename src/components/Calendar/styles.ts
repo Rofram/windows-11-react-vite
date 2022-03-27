@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { darken } from 'polished'
 
 type IContainer = {
   requestToClose?: boolean;
@@ -72,10 +73,11 @@ export const CalendarGrid = styled.div`
 
 type DayProps = {
   isToday?: boolean;
+  isSelected?: boolean;
 }
 
 export const Day = styled.div<DayProps>`
-  ${({ theme, isToday }) => css`
+  ${({ theme, isToday, isSelected }) => css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,12 +85,44 @@ export const Day = styled.div<DayProps>`
     height: 55px;
     border-radius: 50%;
     background-color: ${isToday ? theme.colors.primary : 'transparent'};
-    
+
     span {
       color: ${isToday ? '#000' : theme.colors.white};
       font-size: 1.6rem;
       font-weight: 400;
       font-family: ${theme.font.family.openSans};
+      cursor: default;
+    }
+
+    ${isSelected 
+      ? isToday 
+          ? css`
+              border: 1px solid black;
+          ` 
+          : css`
+              border: 1px solid ${theme.colors.primary};
+              backdrop-filter: brightness(0.8);
+
+              span {
+                color: ${theme.colors.primary};
+              }
+          `
+      : css`
+          border: none;
+        `
+      }
+    
+    ${isToday 
+      ? css`
+        &:hover {
+          background: ${darken(0.1, theme.colors.primary)};
+        }
+      `
+      : css`
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      `
     }
   `}
 `

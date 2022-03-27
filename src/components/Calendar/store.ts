@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 class CalendarStore {
   now = new Date()
+  selectedDay = this.now.getDate()
 
   constructor() {
     makeAutoObservable(this)
@@ -29,6 +30,10 @@ class CalendarStore {
   month = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(this.now)
 
   year = new Intl.DateTimeFormat('pt-BR', { year: 'numeric' }).format(this.now) 
+
+  setSelectedDay(day: number) {
+    this.selectedDay = day
+  }
 }
 
 export default new CalendarStore()

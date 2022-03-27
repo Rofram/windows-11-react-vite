@@ -1,11 +1,16 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { autorun, makeAutoObservable, runInAction } from "mobx";
 import { WindowApp } from './window';
 
 class TaskbarStore {
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
+
+    // autorun(() => {
+    //   document.addEventListener('mouseclick', this.onMouseClick)
+    // })
   }
 
+  // TODO: refatorar isso aqui
   startMenu = {
     isOpen: false,
     requestToClose: false
@@ -20,6 +25,8 @@ class TaskbarStore {
     isOpen: false,
     requestToClose: false
   }
+
+  
 
   apps: Map<string, WindowApp> = new Map();
 

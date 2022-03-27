@@ -24,7 +24,12 @@ function Calendar() {
               </Styled.DayOfWeek>
             ))}
             {calendarStore.days.map((day) => (
-              <Styled.Day key={day} isToday={day == calendarStore.now.getDay()}>
+              <Styled.Day 
+                key={day} 
+                isToday={day == calendarStore.now.getDate()}
+                onClick={() => calendarStore.setSelectedDay(day)}
+                isSelected={day == calendarStore.selectedDay}
+              >
                 <span>{day}</span>
               </Styled.Day>
             ))}
