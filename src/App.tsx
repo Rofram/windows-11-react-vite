@@ -28,11 +28,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Screen>
-        {Array.from(tasks.apps.values()).map((app) => <React.Fragment key={app.store.uuid}>{app.render()}</React.Fragment>)}
+        {Array.from(tasks.apps.values()).map(([app, AppMemorized]) => <AppMemorized key={app.store.uuid} />)}
 
         {tasks.startMenu.isOpen && <StartMenu />}
         {tasks.systemTrayPopup.isOpen && <SystemTrayPopup />}
-        <Calendar />
+        {/* <Calendar /> */}
         <Taskbar />
       </Screen>
     </ThemeProvider>
