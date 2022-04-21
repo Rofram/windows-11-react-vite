@@ -1,5 +1,3 @@
-import * as Styled from './styles'
-import microsoftEdgeStore from './store'
 import { WindowApp } from '../../../core/window'
 
 
@@ -10,7 +8,7 @@ export class MicrosoftEdge extends WindowApp {
 
   render() {
     return super.render(
-      <iframe src={`https://www.bing.com.br/search?q=${microsoftEdgeStore.search}`}></iframe>
+      <iframe src={`https://www.bing.com.br`}></iframe>
     )
   }
 }

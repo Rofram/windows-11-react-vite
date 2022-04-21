@@ -1,4 +1,3 @@
-import * as Styled from './styles'
 import { WindowApp } from '../../../core/window'
 
 export class VsCode extends WindowApp {

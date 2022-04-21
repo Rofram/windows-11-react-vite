@@ -6,7 +6,7 @@ import { StartMenu } from './components/StartMenu'
 import { observer } from 'mobx-react-lite'
 import { SystemTrayPopup } from './components/SystemTrayPopup'
 import Calendar from './components/Calendar'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import taskManager from './core/taskManager'
 
 const Screen = styled.div`
