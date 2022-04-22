@@ -1,13 +1,10 @@
-import { autorun, makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
+import React, { memo } from "react";
 import { WindowApp } from './window';
 
 class TaskbarStore {
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
-
-    // autorun(() => {
-    //   document.addEventListener('mouseclick', this.onMouseClick)
-    // })
   }
 
   // TODO: refatorar isso aqui
@@ -26,12 +23,11 @@ class TaskbarStore {
     requestToClose: false
   }
 
-  
-
-  apps: Map<string, WindowApp> = new Map();
+  apps: Map<string, [WindowApp, React.MemoExoticComponent<React.FC>]> = new Map();
 
   addApp(app: WindowApp) {
-    this.apps.set(app.store.uuid, app)
+    this.apps.set(app.store.uuid, [app, memo(app.render.bind(app))])
+    this.setFocus(app.store.uuid)
   }
 
   removeApp(uuid: string) {
@@ -39,7 +35,7 @@ class TaskbarStore {
   }
 
   setFocus(uuid: string) {
-    Array.from(this.apps.values()).forEach(app => {
+    Array.from(this.apps.values()).forEach(([app]) => {
       app.store.setIsFocused(app.store.uuid === uuid)
     })
   }
