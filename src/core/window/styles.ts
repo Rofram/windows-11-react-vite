@@ -9,26 +9,26 @@ type IContainer = {
 
 const windowOpenAnimation = keyframes`
   0% {
-    width: 550px;
-    height: 309.375px;
+    width: 55rem;
+    height: 30.9375rem;
     opacity: 0;
   }
   100% {
-    width: 1100px;
-    height: 618.75px;
+    width: 110rem;
+    height: 61.875rem;
     opacity: 1;
   }
 `
 
 const windowCloseAnimation = keyframes`
   0% {
-    width: 1100px;
-    height: 618.75px;
+    width: 110rem;
+    height: 61.875rem;
     opacity: 1;
   }
   100% {
-    width: 550px;
-    height: 309.375px;
+    width: 55rem;
+    height: 30.9375rem;
     opacity: 0;
   }
 `
@@ -36,8 +36,8 @@ const windowCloseAnimation = keyframes`
 export const Container = styled.div<IContainer>`
   ${({ requestToClose, isFocused, isMinimized, isMaximized }) => css`
     resize: both;
-    width: 1100px;
-    height: 618.75px;
+    width: 110rem;
+    height: 61.875rem;
     
     background: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(14px);
