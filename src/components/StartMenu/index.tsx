@@ -2,6 +2,18 @@ import * as Styled from './styles'
 import taskManager from '../../core/taskManager'
 import startMenuStore from './store'
 import { Observer } from 'mobx-react-lite'
+import { Droppable, Draggable, DragDropContext, DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd'
+
+const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | NotDraggingStyle | undefined) => ({
+  userSelect: "none",
+  
+  ...(isDragging && {
+    left: '150%',
+    bottom: '70px',
+  }),
+  
+  ...draggableStyle,
+} as React.CSSProperties);
 
 export function StartMenu() {
   return (
@@ -30,24 +42,63 @@ export function StartMenu() {
             </Styled.HeaderApps>
             {startMenuStore.isAllAppsOpened 
               ? (
-                <Styled.ListApps>
-                  {startMenuStore.apps.map((app) => (
-                    <Styled.App key={app.icon}>
-                      <img src={app.icon} alt={app.alt} />
-                      <Styled.AppName>{app.alt}</Styled.AppName>
-                    </Styled.App>
-                  ))}
-                </Styled.ListApps>
+                <DragDropContext onDragEnd={startMenuStore.onDragEnd}>
+                  <Droppable droppableId='droppable'>
+                    {(provided, snapshot) => (
+                      <Styled.ListApps 
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {startMenuStore.apps.map((app, index) => (
+                          <Draggable draggableId={app.alt} key={app.alt} index={index}>
+                            {(provided, snapshot) => (
+                              <Styled.App 
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                key={app.icon}
+                                style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                              >
+                                <img src={app.icon} alt={app.alt} />
+                                <Styled.AppName>{app.alt}</Styled.AppName>
+                              </Styled.App>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </Styled.ListApps>
+                    )}
+                  </Droppable>
+                </DragDropContext>
               )
               : (
-                <Styled.GridApps>
-                  {startMenuStore.apps.map((app) => (
-                    <Styled.App key={app.icon}>
-                      <img src={app.icon} alt={app.alt} />
-                      <Styled.AppName>{app.alt}</Styled.AppName>
-                    </Styled.App>
-                  ))}
-                </Styled.GridApps>
+                <DragDropContext onDragEnd={startMenuStore.onDragEnd}>
+                  <Droppable droppableId='droppable'>
+                    {(provided, snapshot) => (
+                      <Styled.GridApps
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {startMenuStore.apps.map((app, index) => (
+                          <Draggable draggableId={app.alt} key={app.alt} index={index}>
+                            {(provided, snapshot) => (
+                              <Styled.App 
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                key={app.icon}
+                              >
+                                <img src={app.icon} alt={app.alt} />
+                                <Styled.AppName>{app.alt}</Styled.AppName>
+                              </Styled.App>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </Styled.GridApps>
+                    )}
+                  </Droppable>
+                </DragDropContext>
               )
             }
             {!startMenuStore.isAllAppsOpened && (

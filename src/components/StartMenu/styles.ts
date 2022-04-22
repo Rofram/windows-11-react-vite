@@ -40,7 +40,6 @@ export const Container = styled.div<IContainer>`
 
   background-color: rgba(68,68,68,0.4);
   backdrop-filter: blur(40px);
-  filter: brightness(0.8);
   border-radius: 8.75px;
   z-index: 50;
 `
@@ -105,11 +104,18 @@ export const App = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 7.5px;
+  border-radius: 8.75px;
 
   img {
     width: 40px;
     height: 40px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.1);
   }
 `
 
@@ -123,8 +129,8 @@ export const GridApps = styled.div`
 `
 
 export const ListApps = styled.div`
+  position: relative;
   display: flex;
-  gap: 20px;
   flex-direction: column;
   align-items: flex-start;
   overflow-x: none;
@@ -147,6 +153,9 @@ export const ListApps = styled.div`
   ${App} {
     flex-direction: row;
     gap: 25px;
+    width: 100%;
+    padding: 8px 0;
+    justify-content: flex-start;
 
     img {
       width: 30px;
