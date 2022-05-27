@@ -3,13 +3,14 @@ import { Observer } from 'mobx-react-lite'
 import taskManager from '../../core/taskManager'
 import { MicrosoftEdge } from '../../apps/system/MicrosoftEdge'
 import { VsCode } from '../../apps/vendor/VsCode'
+import { StartMenu } from 'components/StartMenu'
 
 export default function TaskBarApps() {
   return (
     <Observer>
       {() => (
         <Styled.Container>
-          <button onClick={() => taskManager.toggleStartMenuOpened()}>
+          <button onClick={() => taskManager.addSystemApp(new StartMenu())}>
             <Styled.App src='assets/taskbar/Windows.svg' />
           </button>
           <button onClick={() => {}}>

@@ -1,12 +1,7 @@
-import { Observer } from 'mobx-react-lite'
-import { makeAutoObservable, runInAction } from 'mobx'
-import * as Styled from './styles'
-import { BsX, BsDash } from 'react-icons/bs'
-import { BiRectangle } from 'react-icons/bi'
+import { makeAutoObservable } from 'mobx'
 import taskManager  from '../taskManager'
 
-
-class WindowStore {
+export class WindowStore {
   dragging = false
   mouseOffset = { x: 0, y: 0 }
   containerPosition = { x: 0, y: 0 }
@@ -19,7 +14,7 @@ class WindowStore {
   titleBar = true
   minimizeButton = true
   maximizeButton = true
-  isClose = false
+  requestToClose = false
 
   constructor() {
     makeAutoObservable(this, {}, {
@@ -27,8 +22,8 @@ class WindowStore {
     })
   }
 
-  requestToClose() {
-    this.isClose = true
+  closeApp() {
+    taskManager.removeApp(this.uuid)
   }
 
   setIsFocused(isFocused: boolean) {
@@ -45,6 +40,10 @@ class WindowStore {
 
   setMaximizeButton(maximizeButton: boolean) {
     this.maximizeButton = maximizeButton
+  }
+
+  setRequestToClose(requestToClose: boolean) {
+    this.requestToClose = requestToClose
   }
 
   setMinimizeButton(minimizeButton: boolean) {
@@ -82,59 +81,5 @@ class WindowStore {
 
   onMouseLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     this.setDragging(false)
-  }
-}
-
-export class WindowApp {
-  store = new WindowStore()
-
-  setMinimizeButton(minimizeButton: boolean) {
-    this.store.setMinimizeButton(minimizeButton)
-  }
-
-  setMaximizeButton(maximizeButton: boolean) {
-    this.store.setMaximizeButton(maximizeButton)
-  }
-
-  close() {
-    this.store.requestToClose()
-    setTimeout(() => {
-      runInAction(() => {
-        taskManager.removeApp(this.store.uuid)
-      })
-    }, 300)
-  }
-
-  render(child?: React.ReactNode) {
-    return (
-      <Observer>
-      {() => (
-        <Styled.Container
-          ref={ref => this.store.setContainerRef(ref)}
-          requestToClose={this.store.isClose}
-          isFocused={this.store.isFocused}
-        >
-          {this.store.titleBar && (
-            <Styled.Header
-              onMouseDown={this.store.onMouseDown}
-              onMouseUp={this.store.onMouseUp}
-              onMouseMove={this.store.onMouseMove}
-              onMouseLeave={this.store.onMouseLeave}
-            >
-              <div>
-                {this.store.minimizeButton && <BsDash />}
-                {this.store.maximizeButton && <BiRectangle />}
-                <BsX onClick={this.close.bind(this)} />
-              </div>
-            </Styled.Header>
-          )
-        }
-          <Styled.Content>
-            {child}
-          </Styled.Content>
-        </Styled.Container>
-      )}
-      </Observer>
-    )
   }
 }

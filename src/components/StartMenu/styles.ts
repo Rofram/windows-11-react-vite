@@ -1,9 +1,11 @@
-import styled, { css, keyframes } from "styled-components"
+import styled, { createGlobalStyle, css, keyframes } from "styled-components"
+import { Container } from '../../core/systemApp/styles'
 
+/*
 const popupAnimation = keyframes`
   0% {
     transform: translateX(-50%);
-    bottom: -1000px;
+    bottom: -100%;
   }
   100% {
     transform: translateX(-50%);
@@ -18,7 +20,7 @@ const closeAnimation = keyframes`
   }
   100% {
     transform: translateX(-50%);
-    bottom: -1000px;
+    bottom: -100%;
   }
 `
 
@@ -44,12 +46,32 @@ export const Container = styled.div<IContainer>`
   border-radius: 8.75px;
   z-index: 50;
 `
+*/
 
 export const Media = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   padding: 40px;
+
+  ${createGlobalStyle`
+    ${Container} {
+      display: flex;
+      flex-direction: column;
+      width: 800px;
+      height: 925px;
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      background-color: rgba(68,68,68,0.4);
+      backdrop-filter: blur(40px);
+      filter: brightness(0.8);
+      border-radius: 8.75px;
+      z-index: 50;
+    }
+  `}
 `
 
 export const SearchBar = styled.div`

@@ -1,38 +1,17 @@
-import styled, { keyframes } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import { Container } from 'core/systemApp/styles';
 
-const openAnimation = keyframes`
-  0% {
-    bottom: -200px;
-  }
-  100% {
-    bottom: 70px;
-  }
-`;
-
-const closeAnimation = keyframes`
-  0% {
-    bottom: 70px;
-  }
-  100% {
-    bottom: -200px;
-  }
-`;
-
-type IContainer = {
-  requestToClose: boolean;
-}
-
-export const Container = styled.div<IContainer>`
-  width: 467.5px;
-  position: absolute;
-  background-color: rgba(68,68,68,0.4);
-  backdrop-filter: blur(40px);
-  filter: brightness(0.8);
-  bottom: 70px;
-  right: 1%;
-  border-radius: 8.75px;
-  animation: ${({ requestToClose }) => requestToClose ? closeAnimation : openAnimation} 0.3s ease-in;
-`;
+// export const Container = styled.div<IContainer>`
+//   width: 467.5px;
+//   position: absolute;
+//   background-color: rgba(68,68,68,0.4);
+//   backdrop-filter: blur(40px);
+//   filter: brightness(0.8);
+//   bottom: 70px;
+//   right: 1%;
+//   border-radius: 8.75px;
+//   animation: ${({ requestToClose }) => requestToClose ? closeAnimation : openAnimation} 0.3s ease-in;
+// `;
 
 export const ButtonContainer = styled.div`
   display: grid;
@@ -79,6 +58,19 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 3rem;
+
+  ${createGlobalStyle`
+    ${Container} {
+        width: 467.5px;
+        position: absolute;
+        background-color: rgba(68,68,68,0.4);
+        backdrop-filter: blur(40px);
+        filter: brightness(0.8);
+        bottom: 70px;
+        right: 1%;
+        border-radius: 8.75px;
+      }
+  `}
 `;
 
 export const RangeContainer = styled.div`

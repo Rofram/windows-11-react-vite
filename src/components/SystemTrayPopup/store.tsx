@@ -47,6 +47,14 @@ class SystemTrayStore {
     },
   ]
 
+  toggleButton(button: string) {
+    this.buttons.forEach(b => {
+      if (b.title === button) {
+        b.isActive = !b.isActive
+      }
+    })
+  }
+
 }
 
 export default new SystemTrayStore()

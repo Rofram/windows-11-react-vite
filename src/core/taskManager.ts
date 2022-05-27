@@ -1,13 +1,11 @@
-import { autorun, makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
+import React, { memo } from "react";
+import { SystemApp } from "./systemApp";
 import { WindowApp } from './window';
 
 class TaskbarStore {
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
-
-    // autorun(() => {
-    //   document.addEventListener('mouseclick', this.onMouseClick)
-    // })
   }
 
   // TODO: refatorar isso aqui
@@ -26,21 +24,38 @@ class TaskbarStore {
     requestToClose: false
   }
 
-  
-
-  apps: Map<string, WindowApp> = new Map();
+  apps: Map<string, [WindowApp, React.MemoExoticComponent<React.FC>]> = new Map();
+  systemApps: Array<[SystemApp, React.MemoExoticComponent<React.FC>]> = []
 
   addApp(app: WindowApp) {
-    this.apps.set(app.store.uuid, app)
+    this.apps.set(app.store.uuid, [app, memo(app.render.bind(app))])
   }
 
   removeApp(uuid: string) {
     this.apps.delete(uuid)
   }
 
+  addSystemApp(app: any) {
+    const openedSystemApp = this.systemApps.length && this.systemApps[0].length && this.systemApps[0]?.[0];
+    if (openedSystemApp) {
+      if (openedSystemApp instanceof app.constructor) {
+        openedSystemApp.close();
+        return;
+      }
+  
+      openedSystemApp.close();
+    }
+
+    this.systemApps.push([app, memo(app.render.bind(app))])
+  }
+
+  removeSystemApp(uuid: string) {
+    this.systemApps = this.systemApps.filter(([systemApp]) => systemApp.uuid !== uuid)
+  }
+
   setFocus(uuid: string) {
     Array.from(this.apps.values()).forEach(app => {
-      app.store.setIsFocused(app.store.uuid === uuid)
+      app[0].store.setIsFocused(app[0].store.uuid === uuid)
     })
   }
 
