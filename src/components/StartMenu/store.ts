@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx'
-import { DropResult } from 'react-beautiful-dnd'
 
 type App = {
   icon: string
@@ -21,27 +20,9 @@ class startMenuStore {
 
   toggleAllApps() {
     this.isAllAppsOpened = !this.isAllAppsOpened
-  }  
-
-  onDragEnd(result: DropResult) {
-    if(!result.destination) {
-      return;
-    }
-
-    this.reorder(
-      this.apps,
-      result.source.index,
-      result.destination.index
-    );
   }
 
-  reorder(list: App[], startIndex: number, endIndex: number) {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
   
-    this.apps = result;
-  };
 
   user = {
     img: 'https://avatars.githubusercontent.com/u/50988834?v=4',

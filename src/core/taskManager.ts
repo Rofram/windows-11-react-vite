@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import React, { memo } from "react";
+import { observer } from "mobx-react-lite";
+import React from "react";
 import { WindowApp } from './window';
 
 class TaskbarStore {
@@ -23,12 +24,15 @@ class TaskbarStore {
     requestToClose: false
   }
 
-  apps: Map<string, [WindowApp, React.MemoExoticComponent<React.FC>]> = new Map();
+  systemApps = new Map();
+
+  apps: Map<string, [WindowApp, React.FC]> = new Map();
 
   addApp(app: WindowApp) {
-    this.apps.set(app.store.uuid, [app, memo(app.render.bind(app))])
+    this.apps.set(app.store.uuid, [app, observer(app.render.bind(app))])
     this.setFocus(app.store.uuid)
   }
+
 
   removeApp(uuid: string) {
     this.apps.delete(uuid)

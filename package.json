@@ -8,18 +8,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "array-move": "^4.0.0",
+    "date-fns": "^2.29.2",
+    "framer-motion": "^7.2.1",
     "mobx": "^6.4.2",
     "mobx-react-lite": "^3.3.0",
     "polished": "^4.1.4",
     "react": "^17.0.2",
-    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "vite-tsconfig-paths": "^3.5.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",
-    "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.10",
     "@types/styled-components": "^5.1.24",
     "@vitejs/plugin-react": "^1.0.7",

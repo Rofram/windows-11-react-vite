@@ -6,8 +6,10 @@ import { StartMenu } from './components/StartMenu'
 import { observer } from 'mobx-react-lite'
 import { SystemTrayPopup } from './components/SystemTrayPopup'
 import Calendar from './components/Calendar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import taskManager from './core/taskManager'
+import { ContextMenu } from 'components/ContextMenu'
+import { WidgetsApp } from 'components/WidgetsApp'
 
 const Screen = styled.div`
   background-image: url('assets/background.png');
@@ -22,17 +24,18 @@ const Screen = styled.div`
 
 function App() {
 
-  const [tasks] = useState(taskManager)
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Screen>
-        {Array.from(tasks.apps.values()).map(([app, AppMemorized]) => <AppMemorized key={app.store.uuid} />)}
+      <Screen id="screen">
+        {Array.from(taskManager.apps.values()).map(([app, AppMemorized]) => <AppMemorized key={app.store.uuid} />)}
 
-        {tasks.startMenu.isOpen && <StartMenu />}
-        {tasks.systemTrayPopup.isOpen && <SystemTrayPopup />}
-        {/* <Calendar /> */}
+        <ContextMenu />
+
+        {taskManager.startMenu.isOpen && <StartMenu />}
+        {taskManager.systemTrayPopup.isOpen && <SystemTrayPopup />}
+        {taskManager.calendar.isOpen && <Calendar />}
+        <WidgetsApp />
         <Taskbar />
       </Screen>
     </ThemeProvider>
