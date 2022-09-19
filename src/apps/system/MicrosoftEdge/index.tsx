@@ -1,11 +1,7 @@
-import { WindowApp } from '../../../core/window'
+import { WindowApp } from 'core/window'
 
 
 export class MicrosoftEdge extends WindowApp {
-  constructor() {
-    super()
-  }
-
   render() {
     return super.render(
       <iframe src={`https://www.bing.com.br`}></iframe>

@@ -12,9 +12,14 @@ class ClockStore {
     this.time = new Date()
   }
 
-  getHours() {
-    const [date, hours] = new Intl.DateTimeFormat('pt-br', { dateStyle: 'short', timeStyle: 'medium' }).format(this.time).split(' ')
-    return [date, hours]
+  get Hours() {
+    const [_, hours] = new Intl.DateTimeFormat('pt-br', { dateStyle: 'short', timeStyle: 'medium' }).format(this.time).split(' ')
+    return hours
+  }
+
+  get Date() {
+    const [date] = new Intl.DateTimeFormat('pt-br', { dateStyle: 'short', timeStyle: 'medium' }).format(this.time).split(' ')
+    return date
   }
 }
 

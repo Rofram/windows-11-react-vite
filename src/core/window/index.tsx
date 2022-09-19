@@ -1,4 +1,3 @@
-import { Observer } from 'mobx-react-lite'
 import { BsX, BsDash } from 'react-icons/bs'
 import { BiRectangle } from 'react-icons/bi'
 
@@ -17,7 +16,7 @@ export class WindowApp {
     this.store.setMaximizeButton(maximizeButton)
   }
 
-  close() {
+  close = () => {
     this.store.setRequestToClose(true)
     setTimeout(() => {
       this.store.closeApp()
@@ -26,34 +25,31 @@ export class WindowApp {
 
   render(child?: React.ReactNode) {
     return (
-      <Observer>
-      {() => (
-        <Styled.Container
-          ref={ref => this.store.setContainerRef(ref)}
-          requestToClose={this.store.requestToClose}
-          isFocused={this.store.isFocused}
-        >
-          {this.store.titleBar && (
-            <Styled.Header
-              onMouseDown={this.store.onMouseDown}
-              onMouseUp={this.store.onMouseUp}
-              onMouseMove={this.store.onMouseMove}
-              onMouseLeave={this.store.onMouseLeave}
-            >
-              <div>
-                {this.store.minimizeButton && <BsDash />}
-                {this.store.maximizeButton && <BiRectangle />}
-                <BsX onClick={this.close.bind(this)} />
-              </div>
-            </Styled.Header>
-          )
-        }
-          <Styled.Content>
-            {child}
-          </Styled.Content>
-        </Styled.Container>
-      )}
-      </Observer>
+      <Styled.Container
+        ref={ref => this.store.setContainerRef(ref)}
+        requestToClose={this.store.requestToClose}
+        isFocused={this.store.isFocused}
+        id={this.store.uuid}
+      >
+        {this.store.titleBar && (
+          <Styled.Header
+            onMouseDown={this.store.onMouseDown}
+            onMouseUp={this.store.onMouseUp}
+            onMouseMove={this.store.onMouseMove}
+            onMouseLeave={this.store.onMouseLeave}
+          >
+            <div>
+              {this.store.minimizeButton && <BsDash />}
+              {this.store.maximizeButton && <BiRectangle />}
+              <BsX onClick={this.close} />
+            </div>
+          </Styled.Header>
+        )
+      }
+        <Styled.Content>
+          {child}
+        </Styled.Content>
+      </Styled.Container>
     )
   }
 }

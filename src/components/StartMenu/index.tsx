@@ -1,139 +1,136 @@
 import * as Styled from './styles'
-import taskManager from '../../core/taskManager'
+import taskManager from 'core/taskManager'
 import startMenuStore from './store'
-import { Observer } from 'mobx-react-lite'
-import { Droppable, Draggable, DragDropContext, DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd'
+import { observer } from 'mobx-react-lite'
+import { AppButton } from './AppButton'
+import { VscSearch } from 'react-icons/vsc'
+import { useMemo, useRef } from 'react'
+import { toJS } from 'mobx'
+import { useContextMenu } from 'hooks/useContextMenu'
+import { useClickAway } from 'hooks/useClickAway'
 
-const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | NotDraggingStyle | undefined) => ({
-  userSelect: "none",
+export const StartMenu = observer(() => {
+  let listOfCharsFormatted = [...new Set(startMenuStore.apps.map(app => app.alt[0]))].sort()
+  const menuRef = useRef<HTMLDivElement>(null)
   
-  ...(isDragging && {
-    left: '150%',
-    bottom: '70px',
-  }),
-  
-  ...draggableStyle,
-} as React.CSSProperties);
+  const ListAllAppsFormatted = useMemo(() => {
+    let apps = Array.from({ length: listOfCharsFormatted.length }, (_, index) => {
+      const appsWithSameChar = toJS(startMenuStore.apps).filter(app => app.alt[0] === listOfCharsFormatted[index])
+      return {
+        [listOfCharsFormatted[index]]: appsWithSameChar
+      }
+    })
+    
+    return apps
+  }, [startMenuStore.apps])
 
-export function StartMenu() {
+  const handlerListener = useContextMenu([
+    { title: "testeando", icon: 'assets/apps/xbox.svg' }, 
+    { title: "mucho texto", icon: 'assets/apps/xbox.svg' }, 
+    { title: "qualquer coisa", icon: 'assets/apps/xbox.svg' }, 
+    { title: "seila", icon: 'assets/apps/xbox.svg' }
+  ])
+
+  useClickAway(menuRef, taskManager.toggleStartMenuOpened)
+
   return (
-    <Observer>
-      {() => (
-        <Styled.Container requestToClose={taskManager.startMenu.requestToClose}>
-          <Styled.Media>
-            <Styled.SearchBar>
-              <input type="text" placeholder='Type here to search' />
-            </Styled.SearchBar>
-            <Styled.HeaderApps>
-              <span>Pinned</span>
-              <Styled.Button onClick={() => startMenuStore.toggleAllApps()}>
-                {startMenuStore.isAllAppsOpened ? (
-                  <>
-                    <span>&#60;</span>
-                    <span>Back</span>
-                  </>
-                ) : (
-                  <>
-                    <span>All apps</span>
-                    <span>&#62;</span>
-                  </>
-                )}
-              </Styled.Button>
-            </Styled.HeaderApps>
-            {startMenuStore.isAllAppsOpened 
-              ? (
-                <DragDropContext onDragEnd={startMenuStore.onDragEnd}>
-                  <Droppable droppableId='droppable'>
-                    {(provided, snapshot) => (
-                      <Styled.ListApps 
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        {startMenuStore.apps.map((app, index) => (
-                          <Draggable draggableId={app.alt} key={app.alt} index={index}>
-                            {(provided, snapshot) => (
-                              <Styled.App 
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                key={app.icon}
-                                style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                              >
-                                <img src={app.icon} alt={app.alt} />
-                                <Styled.AppName>{app.alt}</Styled.AppName>
-                              </Styled.App>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
-                      </Styled.ListApps>
-                    )}
-                  </Droppable>
-                </DragDropContext>
-              )
-              : (
-                <DragDropContext onDragEnd={startMenuStore.onDragEnd}>
-                  <Droppable droppableId='droppable'>
-                    {(provided, snapshot) => (
-                      <Styled.GridApps
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        {startMenuStore.apps.map((app, index) => (
-                          <Draggable draggableId={app.alt} key={app.alt} index={index}>
-                            {(provided, snapshot) => (
-                              <Styled.App 
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                key={app.icon}
-                              >
-                                <img src={app.icon} alt={app.alt} />
-                                <Styled.AppName>{app.alt}</Styled.AppName>
-                              </Styled.App>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
-                      </Styled.GridApps>
-                    )}
-                  </Droppable>
-                </DragDropContext>
-              )
-            }
-            {!startMenuStore.isAllAppsOpened && (
-              <>
-                <Styled.RecommendedHeader>
-                  <h2>Recommended</h2>
-                  <Styled.Button>
-                    <span>More</span>
-                    <span>&#62;</span>
-                  </Styled.Button>
-                </Styled.RecommendedHeader>
-                <Styled.Recommended>
-                  {startMenuStore.recommendedApps.map((app) => (
-                    <Styled.RecommendedApp key={app.title}>
-                      <img src={app.icon} alt={app.title} />
-                      <div>
-                        <span>{app.title}</span>
-                        <p>{app.description}</p>
-                      </div>
-                    </Styled.RecommendedApp>
-                  ))}
-                </Styled.Recommended>
-              </>
-            )}
-          </Styled.Media>
-          {!startMenuStore.isAllAppsOpened && (
-            <Styled.Footer>
-              <Styled.User>
-                <img src={startMenuStore.user.img} alt="" />
-                <span>{startMenuStore.user.name}</span>
-              </Styled.User>
-            </Styled.Footer>
+    <Styled.Container ref={menuRef} requestToClose={taskManager.startMenu.requestToClose} onContextMenu={handlerListener}>
+      <div style={{ marginTop: 30, marginLeft: 40, marginRight: 40 }}>
+        <Styled.SearchBar>
+          <VscSearch size={20} color="#fff" />
+          <input type="text" placeholder='Type here to search' />
+        </Styled.SearchBar>
+      </div>
+      <Styled.HeaderApps>
+        <span>{startMenuStore.isAllAppsOpened ? "All Apps" : "Pinned"}</span>
+        <Styled.Button onClick={startMenuStore.toggleAllApps}>
+          {startMenuStore.isAllAppsOpened ? (
+            <>
+              <span>&#60;</span>
+              <span>Back</span>
+            </>
+          ) : (
+            <>
+              <span>All apps</span>
+              <span>&#62;</span>
+            </>
           )}
-        </Styled.Container>
+        </Styled.Button>
+      </Styled.HeaderApps>
+      {!startMenuStore.isAllAppsOpened ? (
+        <Styled.Media
+          animate={{
+            opacity: 1,
+            x: 0 
+          }}
+          initial={{
+            opacity: 0,
+            x: '-5%'
+          }}
+          transition={{
+            duration: .3
+          }}
+        >
+        <Styled.GridApps>
+          {startMenuStore.apps.map((app) => (
+            <AppButton key={app.icon} icon={app.icon} alt={app.alt} />
+          ))}
+        </Styled.GridApps>
+
+        <Styled.RecommendedHeader>
+          <h2>Recommended</h2>
+          <Styled.Button>
+            <span>More</span>
+            <span>&#62;</span>
+          </Styled.Button>
+        </Styled.RecommendedHeader>
+        <Styled.Recommended>
+          {startMenuStore.recommendedApps.map((app) => (
+            <Styled.RecommendedApp key={app.title}>
+              <img src={app.icon} alt={app.title} />
+              <div>
+                <span>{app.title}</span>
+                <p>{app.description}</p>
+              </div>
+            </Styled.RecommendedApp>
+          ))}
+        </Styled.Recommended>
+      </Styled.Media>
+      ) : (
+        <Styled.ListApps
+          animate={{
+            opacity: 1,
+            x: 0 
+          }}
+          initial={{
+            opacity: 0,
+            x: '5%'
+          }}
+          transition={{
+            duration: .3
+          }}
+        >
+          {ListAllAppsFormatted.map((app, index) => (
+            <>
+              <Styled.ListName 
+                key={listOfCharsFormatted[index]}
+              >
+                {listOfCharsFormatted[index].toUpperCase()}
+              </Styled.ListName>
+              {app[listOfCharsFormatted[index]].map(app => (
+                <AppButton key={app.alt} icon={app.icon} alt={app.alt} />
+              ))}
+            </>
+          ))}
+        </Styled.ListApps>
       )}
-    </Observer>
+      
+      <Styled.Footer>
+        <Styled.User>
+          <img src={startMenuStore.user.img} alt="" />
+          <span>{startMenuStore.user.name}</span>
+        </Styled.User>
+      </Styled.Footer>
+    </Styled.Container>
   )
-}
+})

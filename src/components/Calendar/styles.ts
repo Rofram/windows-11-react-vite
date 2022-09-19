@@ -1,9 +1,32 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { darken } from 'polished'
+import { motion } from "framer-motion";
 
 type IContainer = {
   requestToClose?: boolean;
 }
+
+const popupAnimation = keyframes`
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`
+
+const closeAnimation = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+`
 
 export const Container = styled.div<IContainer>`
   ${({ theme, requestToClose }) => css`
@@ -14,10 +37,25 @@ export const Container = styled.div<IContainer>`
     bottom: 70px;
     right: 15px;
     width: 470px;
-    height: 515px;
+    height: 590px;
     background-color: rgba(68, 68, 68, 0.4);
+    animation: ${requestToClose ?  closeAnimation : popupAnimation} 0.5s ease-in-out;
     backdrop-filter: blur(40px);
   `}
+`
+
+export const SwitchDate = styled.button`
+  display: flex;
+  color: white;
+  font-size: 20px;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  border-radius: 20%;
+
+  :hover {
+    background: rgba(255,255,255,.2);
+  }
 `
 
 export const Header = styled.div`
@@ -50,7 +88,6 @@ export const CalendarTitle = styled.div`
     div {
       display: flex;
       gap: 1rem;
-      padding: 1.2rem 2.2rem;
     }
 
     span {
@@ -69,6 +106,7 @@ export const CalendarGrid = styled.div`
   gap: 10px;
   padding: 0 3rem;
   place-content: center;
+  overflow: hidden;
 `
 
 type DayProps = {
@@ -76,7 +114,7 @@ type DayProps = {
   isSelected?: boolean;
 }
 
-export const Day = styled.div<DayProps>`
+export const Day = styled(motion.div)<DayProps>`
   ${({ theme, isToday, isSelected }) => css`
     display: flex;
     align-items: center;
