@@ -73,9 +73,10 @@ export class WindowStore {
   }
 
   onMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (!this.container) return;
     if (this.dragging) {
-      this.container!.style.left = `${(e.clientX + this.containerPosition.x) - this.mouseOffset.x}px`
-      this.container!.style.top = `${(e.clientY + this.containerPosition.y) - this.mouseOffset.y}px`
+      this.container.style.left = `${(e.clientX + this.containerPosition.x) - this.mouseOffset.x}px`
+      this.container.style.top = `${(e.clientY + this.containerPosition.y) - this.mouseOffset.y}px`
     }
   }
 

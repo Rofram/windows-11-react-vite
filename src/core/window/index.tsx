@@ -16,7 +16,7 @@ export class WindowApp {
     this.store.setMaximizeButton(maximizeButton)
   }
 
-  close() {
+  close = () => {
     this.store.setRequestToClose(true)
     setTimeout(() => {
       this.store.closeApp()
@@ -41,7 +41,7 @@ export class WindowApp {
             <div>
               {this.store.minimizeButton && <BsDash />}
               {this.store.maximizeButton && <BiRectangle />}
-              <BsX onClick={this.close.bind(this)} />
+              <BsX onClick={this.close} />
             </div>
           </Styled.Header>
         )

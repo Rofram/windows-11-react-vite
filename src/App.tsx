@@ -6,10 +6,10 @@ import { StartMenu } from './components/StartMenu'
 import { observer } from 'mobx-react-lite'
 import { SystemTrayPopup } from './components/SystemTrayPopup'
 import Calendar from './components/Calendar'
-import { useEffect, useState } from 'react'
 import taskManager from './core/taskManager'
 import { ContextMenu } from 'components/ContextMenu'
 import { WidgetsApp } from 'components/WidgetsApp'
+import Module from '../bin/paint/hello3.js'
 
 const Screen = styled.div`
   background-image: url('assets/background.png');
@@ -22,13 +22,16 @@ const Screen = styled.div`
   position: relative;
 `
 
-function App() {
+setTimeout(async () => {
+  console.log(await Module())
+}, 500)
 
+function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Screen id="screen">
-        {Array.from(taskManager.apps.values()).map(([app, AppMemorized]) => <AppMemorized key={app.store.uuid} />)}
+        {Array.from(taskManager.apps.values()).map(([app, AppObserved]) => <AppObserved key={app.store.uuid} />)}
 
         <ContextMenu />
 

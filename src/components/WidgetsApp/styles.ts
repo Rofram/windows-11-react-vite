@@ -37,6 +37,7 @@ export const Container = styled.div<ContainerProps>`
     border-radius: 8.75px;
     animation: ${!requestToClose ? openAnimation : closeAnimation} 200ms ease-in-out;
     padding: 2rem;
+    overflow: hidden;
   `}
 `
 
@@ -102,6 +103,14 @@ export const ChildWidget = styled.div`
 
 export const WidgetsContainer = styled.div`
   ${({theme}) => css`
-    padding: 20px;
+    padding: 5rem 2rem;
+    overflow-y: scroll;
+    height: 100%;
+    margin-bottom: 1rem;
+    overflow: hidden;
+
+    img {
+      object-fit: cover;
+    }
   `}
 `

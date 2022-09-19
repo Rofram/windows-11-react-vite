@@ -2,15 +2,17 @@ import { observer } from "mobx-react-lite";
 import * as S from './styles'
 import clockStore from '../Clock/store'
 import { IoAdd } from 'react-icons/io5'
-import { newsApiInstance } from "services/newsApi";
-import { useEffect } from "react";
-
+import { newsApiInstanceMediaStack, type NewsApiResponse } from "services/newsApi";
+import { useEffect, useState } from "react";
 
 export const WidgetsApp = observer(() => {
+  const [CurrentNews, setCurrentNews] = useState<NewsApiResponse['data']>([])
   
   useEffect(() => {
     async function news() {
-      console.log(await newsApiInstance.get(''))
+      const { data } = await newsApiInstanceMediaStack.get<NewsApiResponse>('')
+      console.log(data.data)
+      setCurrentNews(data.data)
     }
 
     news()
@@ -31,9 +33,11 @@ export const WidgetsApp = observer(() => {
         </S.HeaderButtonContainer>
       </S.Header>
       <S.WidgetsContainer>
-        <S.ChildWidget>
-          testando widget
-        </S.ChildWidget>
+        {CurrentNews.map((news) => (
+          <S.ChildWidget key={news.url}>
+            {news.image && <img src={news.image} alt="noticia" width="100%" />}
+          </S.ChildWidget>
+        ))}
       </S.WidgetsContainer>
     </S.Container>
   )
